@@ -1,0 +1,25 @@
+makeCashMatrix <- function(x = matrix()) {
+        m <- NULL
+        set <- function(y) {
+                res_mat <<- y
+                m <<- NULL
+        }
+        get <- function() res_mat
+        setinvmatrix <- function(solve) m <<- solve
+        getinvmatrix <- function() m
+        list(set = set, get = get,
+             setinvmatrix = setinvmatrix,
+             getinvmatrix = getinvmatrix)
+}
+
+cachesolve <- function(x, ...) {
+        m <- res_mat$getinvmatrix()
+        if(!is.null(m)) {
+                message("getting cached data")
+                return(m)
+        }
+        data <- res_mat$get()
+        m <- solve(data, ...)
+        res_mat$setinvmatrix(m)
+        m
+}
